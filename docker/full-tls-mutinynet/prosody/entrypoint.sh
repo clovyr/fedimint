@@ -18,4 +18,8 @@ if [[ "$LOCAL" && "$PASSWORD" && "$DOMAIN" ]]; then
     prosodyctl register "$LOCAL" "$DOMAIN" "$PASSWORD"
 fi
 
+if [ -n "$CERTS_DIR" ]; then
+    watchexec -w "$CERTS_DIR" -- prosodyctl reload &
+fi
+
 exec setpriv --reuid=prosody --regid=prosody --init-groups "$@"
